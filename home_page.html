@@ -2,14 +2,20 @@
 <html>
 <head>
 <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-<script src="js/jquery.min.js" type="text/javascript"></script>
-<link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
-<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/jquery.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="js/bootstrap.min.js"></script>
 
 <style>
 div.categoryAndcarousel{
     width: 100%;
     position: relative;
+}
+
+img.catear{
+    position: absolute;
+    height: 15px;
+    display: none;
 }
 
 div.headbar {
@@ -107,7 +113,10 @@ div.rightProductList{
     left:300px;
     z-index: 1;
     background-color: white;
+    /*display: none;*/
 }
+
+
 
 div.row{
     margin:20px 80px 0px 80px;
@@ -130,7 +139,128 @@ div.sepator{
     margin-top: 20px;
 }
 
+
+/*css style for product list*/
+
+div.CategoryProducts{
+    margin: 0 auto;
+    width: 1013px;
+    padding:50px 10px;
+
+}
+
+div.product_title{
+    display: inline-block;
+    width: 5px;
+    height: 20px;
+    background-color: #19C8A9;
+    vertical-align: top;
+}
+
+div.item_product{
+    float: left;
+    width:189px;
+    height: 285px;
+    border: 1px solid white;
+    margin: 8px 4px;
+    cursor: pointer;
+}
+
+div.item_product a.miaoshu{
+    display: block;
+    color: #666666;
+    font-size: 12px;
+    padding: 16px;
+    text-decoration: none;
+}
+
+
+div.item_product:hover{
+    border:1px solid red;
+}
+
+
+div.item_product img{
+    width: 187px;
+    height: 190px;
+}
+
+div.item_product img:hover{
+    opacity: 0.7;
+}
+
+div.item_product span{
+    color: #c40000;
+    display: block;
+    font-size: 16px;
+    padding-left: 16px;
+    margin-top: -10px;
+}
+
+div.CategoryProduct{
+    margin-bottom: 40px;
+}
+
+img.endpage {
+    display: block;
+    margin: 0 auto;
+    width: 100px;
+}
 </style>
+
+<script>
+    function showRightProduct(cid){
+        $("div.menuItem[cid="+cid+"]").css("background-color","white");
+        $("div.menuItem[cid="+cid+"] a").css("color","skyblue");
+        $("div.rightProductList[cid="+cid+"]").show();
+     }
+
+     function hideRightProduct(cid){
+        $("div.menuItem[cid="+cid+"]").css("background-color","#e8e8e8");
+        $("div.menuItem[cid="+cid+"] a").css("color","black");
+        $("div.rightProductList[cid="+cid+"]").hide();
+     }
+
+    $(function(){
+        $("div.rightMenu span").mouseenter(function(){
+            var left = $(this).position().left;
+            var top = $(this).position().top;
+            var width = $(this).css("width");
+            var destLeft = parseInt(left) + parseInt(width)/2-10;
+            $("img#catear").css("left",destLeft);
+            $("img#catear").css("top",top+35);
+            $("img#catear").fadeIn(500);
+        });
+
+         $("img#catear").mouseleave(function(){
+            $(this).hide();
+         });
+
+
+        $("div.menuItem").mouseenter(function(){
+            var cid=$(this).attr("cid");
+            showRightProduct(cid);
+        });
+
+         $("div.menuItem").mouseleave(function(){
+            var cid=$(this).attr("cid");
+            hideRightProduct(cid);
+         }); 
+
+         $("div.rightProductList").mouseenter(function(){
+            var cid = $(this).attr("cid");
+            showRightProduct(cid);
+         });
+
+         $("div.rightProductList").mouseleave(function(){
+            var cid = $(this).attr("cid");
+            hideRightProduct(cid);
+         });
+     });
+     
+
+     
+</script>
 
 </head>
 
@@ -138,6 +268,9 @@ div.sepator{
 
 <body>
 
+
+<div style="height:50px"></div>
+<img class="catear" id="catear" src="./img/site/catear.png" style="left: 260.5px; top: 159.65px; display: none;">
 <div class="categoryAndcarousel">
     <div class="headbar">
         <div class="head">
@@ -186,8 +319,8 @@ div.sepator{
     </div>
 
     <div class="leftMenu">
-        <div class="menuItem"><span class="glyphicon glyphicon-link"></span><a>平板电视</a></div>
-        <div class="menuItem"><span class="glyphicon glyphicon-link"></span><a>马桶</a></div>
+        <div class="menuItem" cid="80"><span class="glyphicon glyphicon-link"></span><a>平板电视</a></div>
+        <div class="menuItem" cid="81"><span class="glyphicon glyphicon-link"></span><a>马桶</a></div>
         <div class="menuItem"><span class="glyphicon glyphicon-link"></span><a>沙发</a></div>
         <div class="menuItem"><span class="glyphicon glyphicon-link"></span><a>电热水器</a></div>
         <div class="menuItem"><span class="glyphicon glyphicon-link"></span><a>平衡车</a></div>
@@ -206,7 +339,7 @@ div.sepator{
     </div>
 
 
-    <div class="rightProductList">       
+    <div class="rightProductList" cid="80" style="display: none">       
         <div class="row">
             <a>大影院</a><a>周末</a><a>新品特惠</a><a>32吋电视机</a><a>周末</a><a>智能网络</n></a>
             <div class="sepator"></div>
@@ -239,13 +372,81 @@ div.sepator{
             <a>55寸旗舰</a><a>4K超清视界</a><a>限时特惠</a>
             <div class="sepator"></div>
         </div>
+        <div style="clear:both"></div>
+    </div>
+    <div class="rightProductList" cid="81" style="display: none">       
         <div class="row">
-            <a>4K机皇</a><a>曲面机皇</a><a>轻薄4K</a><a>YUNOS</a>
+            <a>hello大影院</a><a>周末</a><a>新品特惠</a><a>32吋电视机</a><a>周末</a><a>智能网络</n></a>
             <div class="sepator"></div>
         </div>
+        <div class="row">
+            <a>USB高清解</a><a>芒果TV在线</a><a>抢购价</a><a>USB解码</a><a>32英吋</a><a>10核</a><a>TCL品牌日</a>
+            <div class="sepator"></div>
+        </div>
+        <div class="row">
+            <a>要赠品</a><a>新品上市</a><a>4K硬屏</a><a>领100元券</a><a>智能高清</a><a>8月，酷暑</a><a>8月大促</a><a>天猫</a>
+            <div class="sepator"></div>
+        </div>
+        <div class="row">
+            <a>智能操作系统</a><a>金色外观</a><a>三星屏幕</a><a>客厅爆款</a><a>八核配置</a><a>限时特惠</a>
+            <div class="sepator"></div>
+        </div>
+        <div class="row">
+            <a>限时特惠</a><a>热销爆款</a><a>4K全高清</a><a>六核智能</a><a>14核4K</a><a>YUNOS</a><a>64位处理器</a>
+            <div class="sepator"></div>
+        </div>
+        <div class="row">
+            <a>微信电视</a><a>4k超清</a><a>64位真4K</a><a>10核机芯</a><a>V字黑釉底座</a><a>4K超清</a>
+            <div class="sepator"></div>
+        </div>
+        <div class="row">
+            <a>64位14核</a><a>海量影视</a><a>人气爆款</a><a>限时特惠</a><a>真4K屏</a><a>65吋巨屏</a>
+            <div class="sepator"></div>
+        </div>
+        <div class="row">
+            <a>55寸旗舰</a><a>4K超清视界</a><a>限时特惠</a>
+            <div class="sepator"></div>
+        </div>
+        <div style="clear:both"></div>
     </div>
+</div>
+
+<!--the product list-->
 
 
-
+<div class="CategoryProducts">
+    <div class="CategoryProduct">
+        <div class="product_title"></div>
+        <span style="margin-left: 30px;">太阳镜</span>
+        <br>
+        <div class="item_product">
+            <a href="#nowhere"><img src="./img/productSingle_middle/9543.jpg"></a>
+            <a href="#nowhere" class="miaoshu">[热销] 好先生同款墨镜孙红雷偏光男士太阳镜韩明星</a>
+            <span>97.50</span>
+        </div>
+        <div class="item_product">
+            <a href="#nowhere"><img src="./img/productSingle_middle/9521.jpg"></a>
+            <a href="#nowhere" class="miaoshu">[热销] 陌森太阳眼镜男女2016偏光定制驾驶近视</a>  
+            <span>518.70</span>
+        </div>
+        <div class="item_product">
+            <a href="#nowhere"><img src="./img/productSingle_middle/9532.jpg"></a>
+            <a href="#nowhere" class="miaoshu">[热销] 帕莎Prsr太阳镜女偏光镜潮范冰冰同款女</a> 
+            <span>624.00</span>
+        </div>
+        <div class="item_product">
+            <a href="#nowhere"><img src="./img/productSingle_middle/9510.jpg"></a>
+            <a href="#nowhere" class="miaoshu">[热销] 变色眼镜男女款半框太阳镜大框潮流防辐射防</a> 
+            <span>170.00</span>
+        </div>
+        <div class="item_product">
+            <a href="#nowhere"><img src="./img/productSingle_middle/9499.jpg"></a>
+            <a href="#nowhere" class="miaoshu">[热销] 新款男士偏光太阳镜日夜两用墨镜潮运动开车</a> 
+            <span>551.00</span>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <img src="./img/site/end.png" class="endpage">
+</div>
 </body>
 </html>
