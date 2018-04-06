@@ -54,13 +54,13 @@
         font-size: 16px;
         color:#000;
         font-weight: bold;
-        margin-left: 5px;
+        margin-left: 0px 10px;
     }
 
     div.proSubTitle{
         font-size: 12px;
         color:red;
-        margin: 4px 0px 8px 5px;
+        margin: 0px 10px;
     }
 
     div.juhuasuan{
@@ -87,7 +87,7 @@
     }
 
     div.proPrice{
-        background-color: #E7E7E7;
+        background-image:url(./img/site/priceBackground.png);
     }
 
     div.proPrice img.imgjuan{
@@ -178,7 +178,7 @@
         display: inline-block;
         width:22px;
         height:32px: 
-        vertical-align: 30%;
+        vertical-align: bottom;
     }
 
     span.upDownArrow img{
@@ -237,6 +237,10 @@
         font-size: 12px;
         color: #999999;
 
+    }
+
+    a.bugBtn:hover,a.addCarBtn:hover{
+        text-decoration: none;
     }
 </style>
 
@@ -311,8 +315,12 @@
         </div>
 
         <div class="divBtn">
-            <button type="submit" class="buyNow">立即购买</button>
-            <button type="submit" class="shopCar"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button>
+            <a href="#nowhere" class="buyBtn">
+                <button type="submit" class="buyNow">立即购买</button>
+            </a>
+            <a href="#nowhere" class="addCarBtn">
+                <button type="submit" class="shopCar"><span class="glyphicon glyphicon-shopping-cart"></span>加入购物车</button>
+            </a>
         </div>
     </div>
 </div>
