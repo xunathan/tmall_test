@@ -8,6 +8,11 @@
   <title>Product Page</title>
 
 <style type="text/css">
+    body{
+        font-size: 12px;
+        font-family: Arial;
+    }
+
     div.mainDiv{
         margin: 10px auto;
         width: 1013px;
@@ -325,28 +330,58 @@
     </div>
 </div>
 <div style="clear:both"></div>
+<style>
+    div.detailAndAccess{
+        margin: 50px auto;
+        width: 800px;
+    }
+
+    div.DATitle{
+        border: 1px solid gray;
+        height: 50px;
+    }
+
+
+    div.DATitle span.daSubTitle{
+        display: inline-block;
+       border-collapse:collapse;
+       width: 80px;
+       line-height: 50px;
+       margin-left: 30px;
+       border-right: 1px solid gray;
+       color: black;
+    }
+    div.productPara span.paraType{
+        display: block;
+    }
+
+
+</style>
+
+
+
 <div class="detailAndAccess">
-    <div class="">
-        <a href="#nowhere"><span class="">商品详情</span></a>
-        <a href="#nowhere"><span class="">累计评价19</span></a>
+    <div class="DATitle">
+        <a href="#nowhere"><span class="daSubTitle">商品详情</span></a>
+        <a href="#nowhere"><span class="daSubTitle">累计评价19</span></a>
     </div>
     <div class="productPara">
-        <span></span>
-        <span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </span>
-        <span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </span>
-        <span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </span>
+        <div class="proDePara">产品参数：</div>
+        <div class="paraType">
+            <span class="paraItem">材质成分: 聚酯纤维100%</span>
+            <span class="paraItem">品牌: Emyche/艾米秋</span>
+            <span class="paraItem">货号: 129668</span>
+            <span class="paraItem">尺码: L M S XL X</span>
+            <span class="paraItem">上市年份季节: 2016年夏季</span>
+            <span class="paraItem">颜色分类: 白色 黑色 浅蓝</span>
+            <span class="paraItem">夏季</span>          
+        </div>
+        <div class="paraImgPart">
+            <img src="./img/productDetail/8626.jpg">
+        </div>
+    </div>
+
+    <div>
     </div>
 </div>
 </div>
