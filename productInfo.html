@@ -332,28 +332,20 @@
 <div style="clear:both"></div>
 <style>
     div.detailAndAccess{
-        margin: 50px auto;
-        width: 800px;
+        width: 790px;
+        margin: 40px auto;        
+    }
+
+
+    a:selected{
+        
     }
 
     div.DATitle{
-        border: 1px solid gray;
-        height: 50px;
+        border: 1px solid #dfdfdf;
+        border-left-width: 0px;
     }
 
-
-    div.DATitle span.daSubTitle{
-        display: inline-block;
-       border-collapse:collapse;
-       width: 80px;
-       line-height: 50px;
-       margin-left: 30px;
-       border-right: 1px solid gray;
-       color: black;
-    }
-    div.productPara span.paraType{
-        display: block;
-    }
 
 
 </style>
@@ -362,8 +354,8 @@
 
 <div class="detailAndAccess">
     <div class="DATitle">
-        <a href="#nowhere"><span class="daSubTitle">商品详情</span></a>
-        <a href="#nowhere"><span class="daSubTitle">累计评价19</span></a>
+        <a href="#nowhere" class="productDetailTopPartSelectedLink selected">商品详情</a>
+        <a href="#nowhere" class="productDetailTopReviewLink">累计评价<span class="accessNumber">19</span></a>
     </div>
     <div class="productPara">
         <div class="proDePara">产品参数：</div>
@@ -376,13 +368,13 @@
             <span class="paraItem">颜色分类: 白色 黑色 浅蓝</span>
             <span class="paraItem">夏季</span>          
         </div>
-        <div class="paraImgPart">
-            <img src="./img/productDetail/8626.jpg">
-        </div>
+        <div style="clear:both"></div>
     </div>
 
-    <div>
+    <div class="paraImgPart">
+        <img src="./img/productDetail/8626.jpg">
     </div>
+
 </div>
 </div>
 </body>
