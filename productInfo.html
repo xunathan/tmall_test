@@ -336,17 +336,89 @@
         margin: 40px auto;        
     }
 
-
-    a:selected{
-        
-    }
-
     div.DATitle{
         border: 1px solid #dfdfdf;
         border-left-width: 0px;
     }
 
+    a.selected{
+        border-right: 1px solid #cfbfb1;
+        border-left: 1px solid #cfbfb1;
+        color:#b10000;
+        line-height: 46px;
+        font-weight: bold;
+        display: inline-block;
+        width: 90px;
+        text-align: center;
+        position: relative;
+    }
 
+    a.selected:before{
+        content:"";
+        display: block;
+        border:1px solid #b00000;
+        /*border-color: #b00000;
+        border-style:solid;*/
+        width:90px;
+        height: 0px;
+        position: absolute;
+        top:-1px;
+        left:-1px;
+    }
+
+    a.selected:after{
+        content:"";
+        display: block;
+        border-width:5px;
+        border-color: #b00000 transparent transparent;
+        border-style:solid;
+        width:0px;
+        height: 0px;
+        position: absolute;
+        top:-1px;
+        left:50%;
+        margin-left: -5px;
+    }
+
+    a.productDetailTopReviewLink{
+        padding:0px 20px;
+        border-right:1px dotted #d2d2d2;
+        color:#333333;
+
+    }
+
+    a:hover{
+        text-decoration: none;
+        color:#c40000;
+    }
+    span.accessNumber{
+        color:3355B9;
+    }
+
+    div.productPara{
+        border:1px solid #dfdfdf;
+        padding: 40px;
+    }
+
+    div.proDePara{
+        color:#999999;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    div.paraType span.paraItem{
+        display: block;
+        float: left;
+        width: 220px;
+        padding:8px 0px;
+        color:#666666;
+    }
+
+    div.paraImgPart img{
+        display: block;
+        width: 790px;
+        /*margin-bottom: 20px;*/
+    }
 
 </style>
 
@@ -366,13 +438,18 @@
             <span class="paraItem">尺码: L M S XL X</span>
             <span class="paraItem">上市年份季节: 2016年夏季</span>
             <span class="paraItem">颜色分类: 白色 黑色 浅蓝</span>
-            <span class="paraItem">夏季</span>          
+            <span class="paraItem">适用年龄: 18-25周岁</span>          
         </div>
         <div style="clear:both"></div>
     </div>
 
     <div class="paraImgPart">
         <img src="./img/productDetail/8626.jpg">
+        <img src="./img/productDetail/8625.jpg">
+        <img src="./img/productDetail/8624.jpg">
+        <img src="./img/productDetail/8623.jpg">
+        <img src="./img/productDetail/8622.jpg">
+        <img src="./img/productDetail/8621.jpg">
     </div>
 
 </div>
