@@ -249,6 +249,74 @@
     }
 </style>
 
+<script type="text/javascript">
+    $(function(){
+        $("img.smallImg").mouseenter(function(){
+            var bigImgURL = $(this).attr("bigImgURL");
+            $("img.bigImg").attr("src",bigImgURL);
+        });
+
+        $("bigImg").load(function(){
+            $("img.smallImg").each(function(){
+                var bigImgURL = $(this).attr("bigImgURL");
+                img = new Image();
+                img.src = bigImgURL;
+
+                img.onload = function(){
+                    console.log(bigImgURL);
+                    $("div.img4load").append($(img));
+                };
+            });
+        });
+
+        var stock = 66;
+        $(".productNumberSetting").keyup(function(){
+            var num= $(this).val();
+            num = parseInt(num);
+            if(isNaN(num))
+                num = 1;
+            if(num <= 0)
+                num = 1;
+            if(num > stock)
+                num = stock;
+
+            $(this).val(num);
+        });
+
+        $(".increaseNumber").click(function(){
+            var num = $(".productNumberSetting").val();
+            num = parseInt(num);
+            num++;
+            if(num > stock)
+                num = stock;
+            $(".productNumberSetting").val(num);
+        });
+
+        $(".decreaseNumber").click(function(){
+            var num = $(".productNumberSetting").val();
+            num = parseInt(num);
+            num--;
+            if(num <= 0)
+                num = 1;
+            $(".productNumberSetting").val(num);
+        });
+
+
+        $("div.productReviewDiv").hide();
+
+        $("a.productReviewTopPartSelectedLink").click(function(){
+            $("div.productReviewDiv").hide();
+            $("div.productDetailDiv").show();
+        });
+
+        $("a.productDetailTopReviewLink").click(function(){
+            $("div.productDetailDiv").hide();
+            $("div.productReviewDiv").show();
+        });
+
+    });
+</script>
+
 </head>
 
 <body>
@@ -258,11 +326,11 @@
     <div class="proImg">
         <img class="bigImg"  src="./img/productSingle/8619.jpg">
         <div class="smallImgDiv">
-            <img class="smallImg" src="./img/productSingle_small/8616.jpg">
-            <img class="smallImg" src="./img/productSingle_small/8617.jpg">
-            <img class="smallImg" src="./img/productSingle_small/8618.jpg">
-            <img class="smallImg" src="./img/productSingle_small/8619.jpg">
-            <img class="smallImg" src="./img/productSingle_small/8620.jpg">
+            <img class="smallImg" src="./img/productSingle_small/8616.jpg" bigImgURL="./img/productSingle/8620.jpg">
+            <img class="smallImg" src="./img/productSingle_small/8617.jpg" bigImgURL="./img/productSingle/8619.jpg">
+            <img class="smallImg" src="./img/productSingle_small/8618.jpg" bigImgURL="./img/productSingle/8620.jpg">
+            <img class="smallImg" src="./img/productSingle_small/8619.jpg" bigImgURL="./img/productSingle/8619.jpg">
+            <img class="smallImg" src="./img/productSingle_small/8620.jpg" bigImgURL="./img/productSingle/8620.jpg">
         </div>
     </div>
 
@@ -303,9 +371,9 @@
                     <input type="text" value="1" class="productNumberSetting">
                 </span>
                 <span class="arrow">
-                    <a href="#nowhere"><span class="upDownArrow"><img src="./img/site/increase.png"></span></a>
+                    <a href="#nowhere" class="increaseNumber"><span class="upDownArrow"><img src="./img/site/increase.png"></span></a>
                     <span class="upMiddleArrow"></span>
-                    <a href="#nowhere"><span class="upDownArrow"><img src="./img/site/decrease.png"></span></a>
+                    <a href="#nowhere" class="decreaseNumber"><span class="upDownArrow"><img src="./img/site/decrease.png"></span></a>
                 </span>
             </span>
             <span style="vertical-align: 70%;">件 库存66件</span>
@@ -331,7 +399,7 @@
 </div>
 <div style="clear:both"></div>
 <style>
-    div.detailAndAccess{
+    div.productDetailDiv,div.productReviewDiv{
         width: 790px;
         margin: 40px auto;        
     }
@@ -380,7 +448,7 @@
         margin-left: -5px;
     }
 
-    a.productDetailTopReviewLink{
+    a.productDetailTopReviewLink,a.productReviewTopPartSelectedLink{
         padding:0px 20px;
         border-right:1px dotted #d2d2d2;
         color:#333333;
@@ -392,7 +460,7 @@
         color:#c40000;
     }
     span.accessNumber{
-        color:3355B9;
+        color:#3355B9;
     }
 
     div.productPara{
@@ -420,15 +488,47 @@
         /*margin-bottom: 20px;*/
     }
 
+    div.proReviewPart{
+        padding-top: 50px;
+    }
+
+    div.proReviewItem{
+        border-bottom: 1px solid #e3e3e3;
+        margin: 10px 0px;
+    }
+
+    div.proReviewItem div.proReviewItemDesc{
+        display: inline-block;
+        width:80%;
+        float:left;
+        color:#333333;
+        margin: 5px 20px;
+    }
+
+    div.proReviewItemDesc div.proReviewItemDescContentTime{
+        color:#cccccc;
+        margin-top: 15px;
+    }
+
+    div.proReviewItem div.proReviewItemUserInfo{
+        color:#404040;
+        margin: 5px 20px;
+        padding:20px 0px;
+    }
+
+    span.userInfoGrayPart{
+        color:#999;
+    }
 </style>
 
 
 
-<div class="detailAndAccess">
+<div class="productDetailDiv">
     <div class="DATitle">
         <a href="#nowhere" class="productDetailTopPartSelectedLink selected">商品详情</a>
         <a href="#nowhere" class="productDetailTopReviewLink">累计评价<span class="accessNumber">19</span></a>
     </div>
+
     <div class="productPara">
         <div class="proDePara">产品参数：</div>
         <div class="paraType">
@@ -453,6 +553,40 @@
     </div>
 
 </div>
+
+<div class="productReviewDiv">
+    <div class="DATitle">
+        <a href="#nowhere" class="productReviewTopPartSelectedLink">商品详情</a>
+        <a href="#nowhere" class=" selected">累计评价<span class="accessNumber">19</span></a>
+    </div>
+
+     <div class="proReviewPart">
+        <div class="proReviewItem">
+            <div class="proReviewItemDesc">
+                <div class="proReviewItemDescContent">不错的购物，包装很精细，布料也不错舒服，因为之前一直购买品牌装，很好的一次网购，生完宝宝刚刚一个多月我一百五十斤穿2XL不错
+                </div>
+                <div class="proReviewItemDescContentTime">2016-08-10</div>
+            </div>
+            <div class="proReviewItemUserInfo">哀****莉 <span class="userInfoGrayPart">（匿名）</span>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+
+        <div class="proReviewItem">
+            <div class="proReviewItemDesc">
+                <div class="proReviewItemDescContent">面料很好，大小也刚刚好，本来买之前还担心，犹豫，等货到了，比我心中想象的好很多，大家放心购买，很满意的购物，以后还会来??
+                </div>
+                <div class="proReviewItemDescContentTime">2016-08-10</div>
+            </div>
+            <div class="proReviewItemUserInfo">贤*闲 <span class="userInfoGrayPart">（匿名）</span>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+
+</div>
+
+
 </div>
 </body>
 
