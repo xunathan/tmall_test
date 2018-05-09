@@ -16,7 +16,7 @@
   	div.cartDiv{
   		width:1013px;
   		margin:10px auto;
-  		color:block;
+  		color:black;
   	}
 
   	div.cartTitle button{
@@ -53,7 +53,7 @@
   		font-size: 14px;
   	}
 
-  	img.selectAllItem{
+  	img.selectAllItem,img.cartProItemIfSelected{
   		cursor: pointer;
   	}
 
@@ -68,6 +68,107 @@
   		font-size: 20px;
   		font-weight: bold;
   	}
+
+    table.cartProductTable{
+        width: 100%;
+        font-size: 12px;
+    }
+
+    table.cartProductTable th{
+        color:#3c3c3c;
+        font-weight: normal;
+        padding:20px;
+    }
+
+    table.cartProductTable th.cartHeadImg{
+        width:100px;
+    }
+
+    th.operation{
+        width: 30px;
+    }
+
+    tr.cartProItemTR{
+        border:1px solid #ccc;
+    }
+
+    tr.cartProItemTR td{
+        padding: 20px;
+    }
+
+
+    tr.cartProItemTR img.cartProImg{
+        padding: 1px;
+        border:1px solid #eee;
+        width: 80px;
+        height:80px;
+
+    }
+
+    div.cartProInfoOutDiv{
+        position: relative;
+        height: 80px;
+    }
+
+    div.cartProInfoOutDiv a{
+        color:#3c3c3c;
+    }
+
+    div.cartProInfoOutDiv a:hover{
+        color:#C40000;
+        text-decoration: underline;
+    }
+
+    div.cartProInfoInnerDiv{
+        position: absolute;
+        bottom: 0px;
+        height: 20px;
+    }
+
+    span.cartProItemOriginPrice{
+        display: block;
+        font-size: 14px;
+        color:#9c9c9c;
+        text-decoration: line-through;
+        font-weight: bold;
+    }
+
+    span.cartProItemSalePrice{
+        font-size: 14px;
+        color: #c40000;
+        font-weight: bold;
+        font-family: Arial;
+    }
+
+    div.cartProChangeNum{
+        width:80px;
+        border:1px solid #e5e5e5;
+    }
+
+    div.cartProChangeNum a{
+        display: inline-block;
+        width: 14px;
+        color: black;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    div.cartProChangeNum input{
+        width: 42px;
+        border:1px solid #aaaaaa;
+        display: inline-block;
+    }
+
+    span.cartProItemTotalPrice{
+        font-size: 14px;
+        color: #c40000;
+        font-weight: bold;
+        font-family: Arial;
+    }
+
+    td.cartItemDel a:hover{
+        cursor: pointer;
+    }
   </style>
 
 </head>
@@ -88,26 +189,26 @@
 		<table class="cartProductTable">
 			<thead>
 				<tr>
-					<th><img src="./img/site/cartNotSelected.png">全选</th>
+					<th class="cartHeadImg"><img src="./img/site/cartNotSelected.png" class="selectAllItem">全选</th>
 					<th>商品信息</th>
 					<th>单价</th>
                     <th>数量</th>
 					<th>金额</th>
-					<th>操作</th>
+					<th class="operation">操作</th>
 				</tr>
 			</thead>
 
 			<tbody>
 				<tr class="cartProItemTR">
 					<td>
-						<img src="./img/site/cartNotSelected.png">
+						<img src="./img/site/cartNotSelected.png" class="cartProItemIfSelected">
 						<a href="#nowhere" style="display: none;"><img src="./img/site/cartSelected.png"></a>
-						<img width="40px" src="./img/productSingle_middle/3665.jpg">
+						<img width="40px" src="./img/productSingle_middle/3665.jpg" class="cartProImg">
 					</td>
 					<td>
-						<div>
+						<div class="cartProInfoOutDiv">
 							<a>美国iRobot扫地机器人吸尘器全自动家用智能扫地机650 天猫电器城</a>
-							<div>
+							<div class="cartProInfoInnerDiv">
 								<img src="./img/site/creditcard.png">
 								<img src="./img/site/7day.png">
 								<img src="./img/site/promise.png">
@@ -115,23 +216,58 @@
 						</div>
 					</td>
 					<td>
-						<span>￥7580.0</span>
-						<span>￥5306.0</span>
+						<span class="cartProItemOriginPrice">￥7580.0</span>
+						<span class="cartProItemSalePrice">￥5306.0</span>
 					</td>
 					<td>
-						<div>
+						<div class="cartProChangeNum">
 							<a>-</a>
-							<input>
+							<input value="1">
 							<a>+</a>
 						</div>
 					</td>
 					<td>
-						<span>￥5,306.00</span>
+						<span class="cartProItemTotalPrice">￥5,306.00</span>
 					</td>
-					<td>
+					<td class="cartItemDel">
 						<a>删除</a>
 					</td>
 				</tr>
+
+                <tr class="cartProItemTR">
+                    <td>
+                        <img src="./img/site/cartNotSelected.png" class="cartProItemIfSelected">
+                        <a href="#nowhere" style="display: none;"><img src="./img/site/cartSelected.png"></a>
+                        <img width="40px" src="./img/productSingle_middle/8510.jpg" class="cartProImg">
+                    </td>
+                    <td>
+                        <div class="cartProInfoOutDiv">
+                            <a>阔腿裤三件套装女夏装2016新款大码雪纺时尚休闲气质棉麻九分裤潮</a>
+                            <div class="cartProInfoInnerDiv">
+                                <img src="./img/site/creditcard.png">
+                                <img src="./img/site/7day.png">
+                                <img src="./img/site/promise.png">
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="cartProItemOriginPrice">￥235.0</span>
+                        <span class="cartProItemSalePrice">￥152.75</span>
+                    </td>
+                    <td>
+                        <div class="cartProChangeNum">
+                            <a>-</a>
+                            <input value="1">
+                            <a>+</a>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="cartProItemTotalPrice">￥152.75</span>
+                    </td>
+                    <td class="cartItemDel">
+                        <a>删除</a>
+                    </td>
+                </tr>
 			</tbody>
 		</table>
 	</div>
