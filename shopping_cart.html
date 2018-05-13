@@ -28,7 +28,7 @@
   		border-radius: 2px;
   	}
 
-  	span.cartPrice{
+  	span.cartTitlePrice{
   		color:#c40000;
   		font-size: 14px;
   		font-weight: bold;
@@ -151,6 +151,7 @@
         color: black;
         text-decoration: none;
         text-align: center;
+        cursor: pointer;
     }
 
     div.cartProChangeNum input{
@@ -171,6 +172,184 @@
     }
   </style>
 
+
+  <script type="text/javascript">
+    function formatMoney(num){
+        num = num.toString().replace(/\$|\,/g,'');
+
+        sign = (num == (num= Math.abs(num)));
+        num = Math.floor(num*100 + 0.5000000001);
+        cents = num%100;
+        num = Math.floor(num/100).toString();
+
+        if(cents < 10) {
+            cents = "0" + cents;
+        }
+
+        for (i=0;i<Math.floor((num.length-(1+i))/3);i++){
+            num = num.substring(0,num.length-(4*i+3)) + ',' +num.substring(num.length-(4*i+3));
+        }
+
+        return (sign?'':'-')+num+'.'+cents;
+    }
+
+
+    function syncCreateOrderBtn(){
+        var selectAny = false;
+        $(".cartProItemIfSelected").each(function(){
+            if("true" == $(this).attr("selectit")){
+                selectAny = true;
+            }
+        });
+
+        if(selectAny){
+            $("button.createOrderButton").css("background-color","#C40000");
+            $("button.createOrderButton").removeAttr("disabled");
+        } else {
+            $("button.createOrderButton").css("background-color","#aaa");
+            $("button.createOrderButton").attr("disabled","disabled");
+        }
+    }
+
+    function syncSelect(){
+        var isSelectAll = true;
+        $(".cartProItemIfSelected").each(function(){
+            if("false" == $(this).attr("selectit")){
+                isSelectAll = false;
+            }
+        });
+
+        if(isSelectAll){
+            $("img.selectAllItem").attr("src","./img/site/cartSelected.png");
+        }else {
+            $("img.selectAllItem").attr("src","./img/site/cartNotSelected.png");
+        }
+    }
+
+    function calcCartSumPrice(){
+        var sum = 0;
+        var totalPrice = 0;
+
+        $("img.cartProItemIfSelected[selectit='true']").each(function(){
+            var oiid = $(this).attr("oiid");
+            var itemPrice = $("span.cartProItemTotalPrice[oiid="+oiid+"]").text();
+            itemPrice = itemPrice.replace(/,|￥/g,"");
+            //itemPrice = itemPrice.replace(/￥/g,"");
+            totalPrice += Number(itemPrice);
+            var num = $("input.setItemNum[oiid="+oiid+"]").val();
+            sum += Number(num);
+        });
+
+        $("span.cartTitlePrice").html("￥"+formatMoney(totalPrice));
+        $("span.cartSumPrice").html("￥"+formatMoney(totalPrice));
+        $("span.cartNumber").html(sum);
+
+      }
+
+      function syncItemPrice(pid,num,price){
+        $(".setItemNum[pid="+pid+"]").val(num);
+        var itemPrice = formatMoney(num*price);
+        $("span.cartProItemTotalPrice[pid="+pid+"]").html("￥"+itemPrice);
+        calcCartSumPrice();
+    }
+
+    $(function(){
+        $("img.cartProItemIfSelected").click(function(){
+            var selectit = $(this).attr("selectit");
+            console.log("enter click "+selectit);
+            if("true" == selectit){
+                $(this).attr("src","./img/site/cartNotSelected.png");
+                $(this).attr("selectit","false");
+                $(this).parents("tr.cartProItemTR").css("background-color","#fff");
+            } else{
+                console.log("enter click "+ "change src");
+                $(this).attr("src","./img/site/cartSelected.png");
+                $(this).attr("selectit","true");
+                $(this).parents("tr.cartProItemTR").css("background-color","#fff8e1");
+            }
+
+            syncSelect();
+            syncCreateOrderBtn();
+            calcCartSumPrice();
+        });
+
+        $("img.selectAllItem").click(function(){
+            var selectit = $(this).attr("selectit");
+            if("true" == selectit){
+                $("img.selectAllItem").attr("src","./img/site/cartNotSelected.png");
+                $("img.selectAllItem").attr("selectit","false");
+                $("img.cartProItemIfSelected").each(function(){
+                    $(this).attr("src","./img/site/cartNotSelected.png");
+                    $(this).attr("selectit","false");
+                    $(this).parents("tr.cartProItemTR").css("background-color","#fff");
+                });
+            } else{
+                $("img.selectAllItem").attr("src","./img/site/cartSelected.png");
+                $("img.selectAllItem").attr("selectit","true");
+                $("img.cartProItemIfSelected").each(function(){
+                    $(this).attr("src","./img/site/cartSelected.png");
+                    $(this).attr("selectit","true");
+                    $(this).parents("tr.cartProItemTR").css("background-color","#fff8e1");
+                });
+
+            }
+
+            syncCreateOrderBtn();
+            calcCartSumPrice();
+        });
+
+        $(".numberPlus").click(function(){
+            var pid = $(this).attr("pid");
+            var stock = $("span.orderItemStock[pid="+pid+"]").text();
+            var price = $("span.orderItemPromotePrice[pid="+pid+"]").text();
+            price = price.replace(/,|￥/g,"");
+            var num = $("input.setItemNum[pid="+pid+"]").val();
+
+            num++;
+            if(num > stock)
+                num = stock;
+
+            syncItemPrice(pid,Number(num),Number(price));
+        });
+
+        $(".numberMinus").click(function(){
+            var pid = $(this).attr("pid");
+            var stock = $("span.orderItemStock[pid="+pid+"]").text();
+            var price = $("span.orderItemPromotePrice[pid="+pid+"]").text();
+            price = price.replace(/,|￥/g,"");
+            var num = Number($("input.setItemNum[pid="+pid+"]").val());
+
+            num--;
+            if(num < 1)
+                num = 1;
+
+            syncItemPrice(pid,num,Number(price));
+        });
+
+        $(".setItemNum").keyup(function(){
+            var pid = $(this).attr("pid");
+            var stock = $("span.orderItemStock[pid="+pid+"]").text();
+            var price = $("span.orderItemPromotePrice[pid="+pid+"]").text();
+            price = price.replace(/,|￥/g,"");
+            var num = Number($("input.setItemNum[pid="+pid+"]").val());
+
+            if(isNaN(num))
+                num = 1;
+            if(num > Number(stock))
+                num = Number(stock);
+            if(num < 1)
+                num = 1;
+
+            syncItemPrice(pid,num,Number(price));
+        });
+
+        $(".cartItemDel").click(function(){
+            $(this).parents("tr.cartProItemTR").hide();
+        });
+    });
+
+  </script>
+
 </head>
 
 <body>
@@ -179,8 +358,8 @@
 <div class="cartDiv">
 	<div class="cartTitle pull-right">
 		<span>已选商品  (不含运费)</span>
-		<span class="cartPrice">￥0.00</span>
-		<button class="">结 算</button>
+		<span class="cartTitlePrice">￥0.00</span>
+		<button class="createOrderButton" disabled="disabled">结 算</button>
 	</div>
 	<div style="clear:both;">
 	</div>
@@ -189,7 +368,7 @@
 		<table class="cartProductTable">
 			<thead>
 				<tr>
-					<th class="cartHeadImg"><img src="./img/site/cartNotSelected.png" class="selectAllItem">全选</th>
+					<th class="cartHeadImg"><img src="./img/site/cartNotSelected.png" class="selectAllItem" selectit="false">全选</th>
 					<th>商品信息</th>
 					<th>单价</th>
                     <th>数量</th>
@@ -199,9 +378,9 @@
 			</thead>
 
 			<tbody>
-				<tr class="cartProItemTR">
+				<tr class="cartProItemTR" oiid="376">
 					<td>
-						<img src="./img/site/cartNotSelected.png" class="cartProItemIfSelected">
+						<img src="./img/site/cartNotSelected.png" class="cartProItemIfSelected" selectit="false" oiid="376">
 						<a href="#nowhere" style="display: none;"><img src="./img/site/cartSelected.png"></a>
 						<img width="40px" src="./img/productSingle_middle/3665.jpg" class="cartProImg">
 					</td>
@@ -221,22 +400,24 @@
 					</td>
 					<td>
 						<div class="cartProChangeNum">
-							<a>-</a>
-							<input value="1">
-							<a>+</a>
+                            <span pid="808" class="hidden orderItemStock">75</span>
+                            <span pid="808" class="hidden orderItemPromotePrice">￥5306.0</span>
+							<a class="numberMinus" pid="808">-</a>
+							<input class="setItemNum" value="1" pid="808" oiid="376">
+							<a class="numberPlus" pid="808">+</a>
 						</div>
 					</td>
 					<td>
-						<span class="cartProItemTotalPrice">￥5,306.00</span>
+						<span class="cartProItemTotalPrice" pid="808" oiid="376">￥5,306.00</span>
 					</td>
 					<td class="cartItemDel">
 						<a>删除</a>
 					</td>
 				</tr>
 
-                <tr class="cartProItemTR">
+                <tr class="cartProItemTR" oiid="377">
                     <td>
-                        <img src="./img/site/cartNotSelected.png" class="cartProItemIfSelected">
+                        <img src="./img/site/cartNotSelected.png" class="cartProItemIfSelected" selectit="false" oiid="377">
                         <a href="#nowhere" style="display: none;"><img src="./img/site/cartSelected.png"></a>
                         <img width="40px" src="./img/productSingle_middle/8510.jpg" class="cartProImg">
                     </td>
@@ -256,13 +437,15 @@
                     </td>
                     <td>
                         <div class="cartProChangeNum">
-                            <a>-</a>
-                            <input value="1">
-                            <a>+</a>
+                            <span pid="809" class="hidden orderItemStock">17</span>
+                            <span pid="809" class="hidden orderItemPromotePrice">￥152.75</span>
+                            <a class="numberMinus" pid="809">-</a>
+                            <input value="1" class="setItemNum" pid="809" oiid="377">
+                            <a class="numberPlus" pid="809">+</a>
                         </div>
                     </td>
                     <td>
-                        <span class="cartProItemTotalPrice">￥152.75</span>
+                        <span class="cartProItemTotalPrice" pid="809" oiid="377">￥152.75</span>
                     </td>
                     <td class="cartItemDel">
                         <a>删除</a>
@@ -274,13 +457,13 @@
 
 
 	<div class="cartFoot">
-		<img src="./img/site/cartNotSelected.png" class="selectAllItem">
+		<img src="./img/site/cartNotSelected.png" class="selectAllItem" selectit="false">
 		<span>全选</span>
 		<div class="pull-right">
 			<span>已选商品<span class="cartNumber">0</span> 件</span>
 			<span>合计 (不含运费): </span>
 			<span class="cartSumPrice">￥0.00</span>
-			<button>结  算</button>
+			<button class="createOrderButton" disabled="disabled">结  算</button>
 		</div>
 	</div>
 </div>
